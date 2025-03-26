@@ -12,7 +12,7 @@
         },
         {
             "name": "gcr.io/cloud-builders/gsutil",
-            "args": ["cp", "-r", "gcp-ng/dist/gcp-ng/browser/*", "gs://gcp-cloud-build-20250322"]
+            "args": ["cp", "-r", "gcp-ng/dist/gcp-ng/browser/*", "gs://gcp-cloud-build-20250324"]
         },
         {
             "name": "node:20",
@@ -20,6 +20,6 @@
             "args": ["-c", "cd gcp-ng && npm run test"]
         }
     ],
-    "timeout": "1200s",
-    "logsBucket": "gs://gcp-cloud-build-20250322-logs"
+    "timeout": "1250s",
+    "logsBucket": "gs://gcp-cloud-build-20250324-logs"
 }
