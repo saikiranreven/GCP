@@ -1,6 +1,11 @@
 {
     "steps": [
       {
+        "name": "python:3.9",
+        "entrypoint": "pip",
+        "args": ["install", "-r", "requirements.txt", "--user"]
+      },
+      {
         "name": "gcr.io/google.com/cloudsdktool/cloud-sdk",
         "entrypoint": "bash",
         "args": [
@@ -11,7 +16,7 @@
     ],
     "options": {
       "logging": "CLOUD_LOGGING_ONLY",
-      "machineType": "E2_HIGHCPU_8",
-      "timeout": "600s"
-    }
+      "machineType": "E2_HIGHCPU_8"
+    },
+    "timeout": "600s"
   }
