@@ -1,25 +1,30 @@
 {
     "steps": [
-        {
-            "name": "node:20",
-            "entrypoint": "bash",
-            "args": ["-c", "cd gcp-ng && npm install"]
-        },
-        {
-            "name": "node:20",
-            "entrypoint": "bash",
-            "args": ["-c", "cd gcp-ng && npm run build"]
-        },
-        {
-            "name": "gcr.io/cloud-builders/gsutil",
-            "args": ["cp", "-r", "gcp-ng/dist/gcp-ng/browser/*", "gs://gcp-cloud-build-20250324"]
-        },
-        {
-            "name": "node:20",
-            "entrypoint": "bash",
-            "args": ["-c", "cd gcp-ng && npm run test"]
-        }
+      {
+        "name": "python:3.9",
+        "entrypoint": "pip",
+        "args": ["install", "-t", "/tmp/python-deps", "-r", "requirements.txt"]
+      },
+      {
+        "name": "gcr.io/google.com/cloudsdktool/cloud-sdk",
+        "entrypoint": "gcloud",
+        "args": [
+          "run",
+          "deploy",
+          "datetime-app",
+          "--source",
+          ".",
+          "--region",
+          "us-central1",
+          "--platform",
+          "managed",
+          "--allow-unauthenticated",
+          "--set-env-vars",
+          "TZ=${_TIMEZONE}"
+        ]
+      }
     ],
-    "timeout": "1250s",
-    "logsBucket": "gs://gcp-cloud-build-20250324-logs"
-}
+    "substitutions": {
+      "_TIMEZONE": "America/New_York"
+    }
+  }
